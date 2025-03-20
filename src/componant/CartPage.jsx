@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './css/CartPage.css'; // Import custom CSS for the cart page
 
 function CartPage({ cart, handleCheckout }) {
-  // Calculate the total price of items in the cart
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
   return (
@@ -13,13 +13,15 @@ function CartPage({ cart, handleCheckout }) {
       ) : (
         <>
           <div className="cart-items">
-            {cart.map((item, index) => (
-              <div key={index} className="cart-item">
-                <img src={item.imageUrl} alt={item.name} className="cart-item-image" />
-                <div className="cart-item-details">
-                  <h3>{item.name}</h3>
-                  <p>${item.price.toFixed(2)}</p>
-                </div>
+            {cart.map((item) => (
+              <div key={item.id} className="cart-item">
+                <Link to={`/products/${item.id}`} className="cart-item-link">
+                  <img src={item.imageUrl} alt={item.name} className="cart-item-image" />
+                  <div className="cart-item-details">
+                    <h3>{item.name}</h3>
+                    <p>${item.price.toFixed(2)}</p>
+                  </div>
+                </Link>
               </div>
             ))}
           </div>

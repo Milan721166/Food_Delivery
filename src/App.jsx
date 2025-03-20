@@ -11,6 +11,8 @@ import UserLogin from './componant/UserLogin';
 import UserRegister from './componant/UserRegister';
 import RestaurantLogin from './componant/RestaurantLogin';
 import RestaurantPage from './componant/RestaurantPage'; // Import the RestaurantPage component
+import ProductDetails from './componant/ProductDetails'; // Import the ProductDetails component
+import Products from './componant/Products'; // Import the Products component
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -70,6 +72,8 @@ function App() {
         <Route path="/user-register" element={<UserRegister />} />
         <Route path="/restaurant-login" element={<RestaurantLogin />} />
         <Route path="/restaurant_page" element={<RestaurantPage />} /> {/* Add Route for Restaurant Page */}
+        <Route path="/products" element={<Products />} /> {/* Add route for all products */}
+        <Route path="/products/:id" element={<ProductDetails />} /> {/* Ensure this route exists */}
       </Routes>
 
       <footer className="footer">

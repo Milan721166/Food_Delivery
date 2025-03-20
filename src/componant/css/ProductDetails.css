@@ -1,0 +1,20 @@
+.product-details-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+}
+
+.product-details-container h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.product-details-container p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}

@@ -1,9 +1,10 @@
 /* ===== CSS Variables ===== */
 :root {
-  --primary: #c05621; /* Improved contrast for accessibility */
+  --primary: #c05621;
+  /* Improved contrast for accessibility */
   --secondary: #9c4221;
   --text: #2d3748;
-  --background: #f7fafc;
+  --background: #373737;
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --success: #28a745;
   --info: #007bff;
@@ -58,7 +59,7 @@ body {
 
 /* ===== Card Design ===== */
 .card {
-  background: var(--white);
+  background-color: var(--dark-gray);
   border-radius: 16px;
   box-shadow: var(--shadow);
   overflow: hidden;
