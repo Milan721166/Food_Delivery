@@ -1,0 +1,235 @@
+/* NavBar.css */
+
+/* General Navbar Styles */
+.navbar {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 1rem;
+  margin-bottom: 2rem; /* Add space below the NavBar */
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff6347 !important; /* Tomato color for brand */
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand img {
+  border-radius: 50%;
+  width: 60px; /* Set logo width */
+  height: 60px; /* Set logo height */
+  object-fit: cover; /* Ensure the image fits well */
+}
+
+.nav-link {
+  font-size: 1.1rem;
+  color: #333 !important;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link:hover {
+  color: #ff6347 !important; /* Tomato color on hover */
+}
+
+.nav-link i {
+  font-size: 1.2rem;
+}
+
+.badge {
+  font-size: 0.8rem;
+}
+
+.form-control {
+  border-radius: 20px;
+}
+
+.btn-outline-success {
+  border-color: #ff6347;
+  color: #ff6347;
+  border-radius: 20px;
+}
+
+.btn-outline-success:hover {
+  background-color: #ff6347;
+  color: white;
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0; /* Add padding to dropdown items */
+}
+
+.dropdown-item {
+  color: #333;
+  padding: 0.5rem 1rem; /* Add padding for better touch targets */
+  font-size: 1rem; /* Ensure consistent font size */
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-item:hover {
+  background-color: #ff6347;
+  color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .navbar-collapse {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem; /* Add space between navbar and collapsed content */
+  }
+
+  .form-control {
+    margin-bottom: 1rem;
+  }
+
+  .btn-outline-success {
+    width: 100%;
+  }
+
+  .nav-item {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Full-width dropdown menu for mobile */
+  .dropdown-menu {
+    width: 100%;
+    text-align: center; /* Center-align dropdown items */
+    background-color: #f8f9fa; /* Light background for dropdown */
+    border: none;
+    box-shadow: none;
+  }
+
+  .dropdown-item {
+    padding: 0.75rem 1rem; /* Increase padding for mobile */
+  }
+}
+
+/* ===== Theme Toggle Button ===== */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode Styles */
+.dark .navbar {
+  background-color: #1a202c !important; /* Dark background for navbar */
+  color: #e2e8f0 !important; /* Light text for navbar */
+}
+
+.dark .navbar-brand,
+.dark .nav-link,
+.dark .dropdown-item {
+  color: #e2e8f0 !important; /* Light text for links */
+}
+
+.dark .navbar-toggler-icon {
+  filter: invert(1); /* Invert hamburger icon for dark mode */
+}
+
+.dark .form-control {
+  background-color: #2d3748;
+  color: #e2e8f0;
+  border-color: #4a5568;
+}
+
+.dark .btn-outline-success {
+  border-color: #48bb78;
+  color: #48bb78;
+}
+
+.dark .btn-outline-success:hover {
+  background-color: #48bb78;
+  color: #fff;
+}
+
+.dark .theme-toggle {
+  border-color: #4a5568;
+  color: #e2e8f0;
+}
+
+.dark .theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark mode dropdown menu */
+.dark .dropdown-menu {
+  background-color: #2d3748; /* Dark background for dropdown */
+  border: none;
+}
+
+.dark .dropdown-item {
+  color: #e2e8f0; /* Light text for dropdown items */
+}
+
+.dark .dropdown-item:hover {
+  background-color: #48bb78; /* Green hover for dark mode */
+  color: white;
+}
+/* NavBar.css */
+
+/* Search Results */
+.search-results {
+  position: absolute;
+  top: 100%; /* Position below the search bar */
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-result-item:hover {
+  background-color: #f8f9fa;
+}
+
+.search-result-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+}
+
+.search-result-details h5 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.search-result-details p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+}

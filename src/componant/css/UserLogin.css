@@ -1,0 +1,104 @@
+/* UserLogin.css */
+
+/* Container for the login page */
+.user-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 20px;
+    background: var(--background);
+  }
+  
+  /* Login card styling */
+  .user-login-card {
+    background: #ffffff; /* White background */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  /* Title styling */
+  .user-login-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333; /* Dark gray text */
+  }
+  
+  /* Error message styling */
+  .user-login-error {
+    background-color: #ffebee; /* Light red background */
+    color: #c62828; /* Dark red text */
+    padding: 0.75rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  /* Form group styling */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #555; /* Medium gray text */
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333; /* Dark gray text */
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #007bff; /* Blue border on focus */
+    outline: none;
+  }
+  
+  /* Login button styling */
+  .user-login-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .user-login-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Register text styling */
+  .user-login-register-text {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #555; /* Medium gray text */
+  }
+  
+  .register-link {
+    color: #007bff; /* Blue link */
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .register-link:hover {
+    text-decoration: underline; /* Underline on hover */
+  }

@@ -1,0 +1,15 @@
+{
+    "title": "Exclusive 50% Off on Your First Order!",
+    "description": "Get 50% off your first order with us. Enjoy delicious food with great savings. Limited time offer!",
+    "ctaText": "Claim Your Discount",
+    "ctaLink": "https://www.example.com/claim-discount",
+    "isActive": true,
+    "discountPercentage": 50,
+    "colors": {
+      "primary": "#ff4757",
+      "secondary": "#ff6b81",
+      "accent": "#2ed573"
+    },
+    "marqueeText": "Hurry up! Offer ends soon!"
+  }
+  
