@@ -1,79 +1,124 @@
 /* Category.css */
+
+/* General Styles */
+.category-wrapper {
+  padding: 20px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  overflow: hidden; /* Hide overflow for scrolling effect */
+}
+
 .category-container {
-    text-align: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.category-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: var(--heading-color);
+}
+
+/* Category List */
+.category-list {
+  width: 100%;
+  overflow: hidden; /* Hide overflow for scrolling effect */
+}
+
+.category-scroll {
+  display: flex;
+  animation: scroll 20s linear infinite; /* Marquee animation */
+}
+
+.category-item {
+  width: 200px; /* Increased width for larger images */
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: var(--card-background);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* Prevent items from shrinking */
+  margin-right: 20px; /* Spacing between items */
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.category-image {
+  width: 100%;
+  height: 150px; /* Increased height for larger images */
+  object-fit: cover;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.category-item h3 {
+  margin: 10px 0;
+  font-size: 18px; /* Increased font size */
+  color: var(--text-color);
+}
+
+/* Marquee Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
   }
-  
-  .category-container h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
+  100% {
+    transform: translateX(-50%); /* Scroll to the left */
   }
-  
-  .category-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 items per row on desktop */
-    gap: 20px;
-    padding: 0 20px;
-  }
-  
+}
+
+/* Theme Variables */
+.light-theme {
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --heading-color: #000000;
+  --card-background: #f9f9f9;
+  --primary-color: #ff6f61;
+}
+
+.dark-theme {
+  --background-color: #1e1e1e;
+  --text-color: #ffffff;
+  --heading-color: #ffffff;
+  --card-background: #2c2c2c;
+  --primary-color: #ff6f61;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .category-item {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-    aspect-ratio: 1 / 1; /* Makes the item square (height = width) */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 150px; /* Adjusted for tablets */
   }
-  
-  .category-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
+
   .category-image {
-    width: 100%;
-    height: 70%; /* Image takes 70% of the item's height */
-    object-fit: cover;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    height: 120px; /* Adjusted for tablets */
   }
-  
+
   .category-item h3 {
-    margin: 10px 0;
-    font-size: 1.2rem;
-    color: #555;
-    padding: 0 10px;
-    height: 30%; /* Text takes 30% of the item's height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 16px; /* Adjusted for tablets */
   }
-  
-  /* Mobile Responsiveness */
-  @media (max-width: 768px) {
-    .category-list {
-      grid-template-columns: repeat(2, 1fr); /* 2 items per row on mobile */
-      gap: 10px;
-    }
-  
-    .category-item h3 {
-      font-size: 1rem; /* Smaller font size for mobile */
-    }
+}
+
+@media (max-width: 480px) {
+  .category-item {
+    width: 120px; /* Adjusted for mobile */
+    margin-right: 10px; /* Reduced spacing for mobile */
   }
-  
-  @media (max-width: 480px) {
-    .category-list {
-      grid-template-columns: repeat(1, 1fr); /* 1 item per row on very small screens */
-    }
-  
-    .category-item h3 {
-      font-size: 0.9rem; /* Smaller font size for very small screens */
-    }
+
+  .category-image {
+    height: 100px; /* Adjusted for mobile */
   }
+
+  .category-item h3 {
+    font-size: 14px; /* Adjusted for mobile */
+  }
+
+  .category-scroll {
+    animation: scroll 15s linear infinite; /* Faster animation for mobile */
+  }
+}
