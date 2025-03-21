@@ -1,47 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
-import axios from 'axios';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import dishes from '../services/api.json'; // Import the JSON data
 import './css/Home.css'; // Import custom CSS
 
-function Home({ handleAddToCart }) {
-  const [dishes, setDishes] = useState([]);
+function Home({ handleAddToCart, theme, toggleTheme }) {
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    // Fetch data from the backend API
-    axios.get('http://localhost:8080/products')
-      .then(response => {
-        setDishes(response.data); // Update state with fetched data
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+  const handleProductClick = (id) => {
+    console.log("Navigating to productDetails with id:", id); // Debug log
+    navigate(`/productDetails/${id}`); // Ensure this matches the route in App.jsx
+  };
 
   return (
-    <div className="menu-container">
-      <h1 className="menu-title">Restaurants Near You</h1>
+    <div className={`menu-container ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
+      <h1 className="menu-title">Trending Foods</h1>
       <div className="card-grid">
-        {dishes.map((dish) => (
-          <Link to={`/products/${dish.id}`} key={dish.id} className="card-link">
-            <div className="card">
-              <img src={dish.imageUrl} alt={dish.name} className="card-image" />
+        {dishes.map((dish) => {
+          console.log("Dish object:", dish); // Debug log
+          return (
+            <div key={dish.id} className="card" onClick={() => handleProductClick(dish.id)}>
+              <img
+                src={dish.imageUrl}
+                alt={dish.name}
+                className="card-image"
+              />
               <div className="card-content">
                 <h3 className="card-title">{dish.name}</h3>
                 <p className="card-description">{dish.description}</p>
                 <p className="card-price">${dish.price.toFixed(2)}</p>
                 <div className="card-buttons">
-                  <button className="success" onClick={(e) => {
-                    e.preventDefault(); // Prevent navigation when adding to cart
-                    handleAddToCart(dish);
-                  }}>
+                  <button className="success" onClick={(e) => { e.stopPropagation(); handleAddToCart(dish); }}>
                     Add to Cart
                   </button>
-                  <button className="card-button">Order Now</button>
+                  <button className="card-button" onClick={(e) => { e.stopPropagation(); handleProductClick(dish.id); }}>
+                    Order Now
+                  </button>
                 </div>
               </div>
             </div>
-          </Link>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
