@@ -6,7 +6,7 @@ const Order = require("../models/orders"); // Removed duplicate import
 
 dotenv.config();
 
-// Sample Users
+// Sample Users    new users added
 const users = [ // Changed from `Users` to `users`
     {
         userName: "Alice",
