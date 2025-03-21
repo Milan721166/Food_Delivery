@@ -1,10 +1,9 @@
 /* ===== CSS Variables ===== */
 :root {
-  --primary: #c05621;
-  /* Improved contrast for accessibility */
+  --primary: #c05621; /* Improved contrast for accessibility */
   --secondary: #9c4221;
   --text: #2d3748;
-  --background: #373737;
+  --background: #f7fafc;
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --success: #28a745;
   --info: #007bff;
@@ -59,7 +58,7 @@ body {
 
 /* ===== Card Design ===== */
 .card {
-  background-color: var(--dark-gray);
+  background: var(--white);
   border-radius: 16px;
   box-shadow: var(--shadow);
   overflow: hidden;
@@ -187,4 +186,141 @@ body {
     transform: none;
     box-shadow: var(--shadow);
   }
+}
+/* Light Theme Styles (Default) */
+.menu-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.menu-title {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.menu-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #e67e22;
+  margin: 10px auto 0;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 10px;
+}
+
+.card-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #28a745;
+  margin: 0 0 15px;
+}
+
+.card-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.card-buttons button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.card-buttons .success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.card-buttons .card-button {
+  background-color: #e67e22;
+  color: #fff;
+}
+
+/* Dark Theme Styles */
+.dark-theme .menu-container {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-theme .menu-title {
+  color: #fff;
+}
+
+.dark-theme .menu-title::after {
+  background-color: #ff8c42;
+}
+
+.dark-theme .card {
+  background-color: #444;
+  border-color: #555;
+}
+
+.dark-theme .card-title {
+  color: #fff;
+}
+
+.dark-theme .card-description {
+  color: #ccc;
+}
+
+.dark-theme .card-price {
+  color: #28a745;
+}
+
+.dark-theme .card-buttons .success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.dark-theme .card-buttons .card-button {
+  background-color: #ff8c42;
+  color: #fff;
 }
