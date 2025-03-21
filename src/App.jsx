@@ -10,31 +10,37 @@ import AdminLogin from './componant/AdminLogin';
 import UserLogin from './componant/UserLogin';
 import UserRegister from './componant/UserRegister';
 import RestaurantLogin from './componant/RestaurantLogin';
-import RestaurantPage from './componant/RestaurantPage'; // Import the RestaurantPage component
-import ProductDetails from './componant/ProductDetails'; // Import the ProductDetails component
-import Products from './componant/Products'; // Import the Products component
+import RestaurantPage from './componant/RestaurantPage';
+import ProductDetails from './componant/ProductDetails';
+import RestaurantList from './componant/RestaurantList'; // Import the RestaurantList component
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [theme, setTheme] = useState('light'); // State for theme
   const [cart, setCart] = useState([]);
   const [showCartPage, setShowCartPage] = useState(false);
 
+  // Toggle theme between light and dark
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
+    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
+  // Apply theme to the entire app
   useEffect(() => {
-    if (isDarkMode) {
+    if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }, [isDarkMode]);
+  }, [theme]);
 
+  // Add item to cart
   const handleAddToCart = (dish) => {
-    setCart([...cart, dish]);
+    if (!cart.some((item) => item.id === dish.id)) { // Prevent duplicates
+      setCart([...cart, dish]);
+    }
   };
 
+  // Handle checkout
   const handleCheckout = () => {
     alert('Thank you for your purchase!');
     setCart([]);
@@ -43,80 +49,86 @@ function App() {
 
   return (
     <Router>
-      <header>
-        <NavBar isDarkMode={isDarkMode} toggleTheme={toggleTheme} cart={cart} setShowCartPage={setShowCartPage} />
-      </header>
+      <div className={theme === 'dark' ? 'dark-theme' : 'light-theme'}>
+        <header>
+          <NavBar theme={theme} toggleTheme={toggleTheme} cart={cart} setShowCartPage={setShowCartPage} />
+        </header>
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <section aria-label="Special Offer">
-                <Offer />
-              </section>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <section aria-label="Special Offer">
+                  <Offer theme={theme} />
+                </section>
 
-              <section aria-label="Food Categories">
-                <Category />
-              </section>
+                <section aria-label="Food Categories">
+                  <Category theme={theme} />
+                </section>
 
-              <main>
-                <Home handleAddToCart={handleAddToCart} />
-              </main>
-            </>
-          }
-        />
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/cart" element={<CartPage cart={cart} handleCheckout={handleCheckout} />} />
-        <Route path="/user-login" element={<UserLogin />} />
-        <Route path="/user-register" element={<UserRegister />} />
-        <Route path="/restaurant-login" element={<RestaurantLogin />} />
-        <Route path="/restaurant_page" element={<RestaurantPage />} /> {/* Add Route for Restaurant Page */}
-        <Route path="/products" element={<Products />} /> {/* Add route for all products */}
-        <Route path="/products/:id" element={<ProductDetails />} /> {/* Ensure this route exists */}
-      </Routes>
+                <main>
+                  <RestaurantList theme={theme} /> {/* Pass theme prop */}
+                  <Home handleAddToCart={handleAddToCart} theme={theme} />
+                </main>
+              </>
+            }
+          />
+          <Route path="/admin-login" element={<AdminLogin theme={theme} />} />
+          <Route path="/cart" element={<CartPage cart={cart} handleCheckout={handleCheckout} theme={theme} />} />
+          <Route path="/user-login" element={<UserLogin theme={theme} />} />
+          <Route path="/user-register" element={<UserRegister theme={theme} />} />
+          <Route path="/restaurant-login" element={<RestaurantLogin theme={theme} />} />
+          <Route path="/restaurant_page" element={<RestaurantPage theme={theme} />} />
+          <Route path="/productDetails/:id" element={<ProductDetails theme={theme} />} />
+        </Routes>
 
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-section">
-            <h3>Quick Links</h3>
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/menu">Menu</a></li>
-              <li><a href="/about">About Us</a></li>
-              <li><a href="/contact">Contact</a></li>
-            </ul>
-          </div>
+        <footer className={`footer ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
+          <div className="footer-content">
+            <div className="footer-section">
+              <h3>Quick Links</h3>
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/restaurants">Restaurants</a></li>
+                <li><a href="/menu">Menu</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div>
 
-          <div className="footer-section">
-            <h3>Contact Us</h3>
-            <p>Barasat, Kolkata</p>
-            <p>Kolkata, 700124</p>
-            <p>Email: info@FoodieExpress.com</p>
-          </div>
+            <div className="footer-section">
+              <h3>Contact Us</h3>
+              <p>Barasat, Kolkata</p>
+              <p>Kolkata, 700124</p>
+              <p>Email: info@FoodieExpress.com</p>
+            </div>
 
-          <div className="footer-section">
-            <h3>Follow Us</h3>
-            <div className="social-links">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <div className="footer-section">
+              <h3>Follow Us</h3>
+              <div className="social-links">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+              </div>
+            </div>
+
+            <div className="footer-section">
+              <h3>Subscribe to Our Newsletter</h3>
+              <form className="newsletter-form" onSubmit={(e) => {
+                e.preventDefault();
+                alert('Thank you for subscribing!');
+              }}>
+                <input type="email" placeholder="Enter your email" required />
+                <button type="submit">Subscribe</button>
+              </form>
             </div>
           </div>
 
-          <div className="footer-section">
-            <h3>Subscribe to Our Newsletter</h3>
-            <form className="newsletter-form">
-              <input type="email" placeholder="Enter your email" required />
-              <button type="submit">Subscribe</button>
-            </form>
+          <div className="footer-bottom">
+            <p>© 2025 FoodieExpress. All rights reserved. Created By Milan & Malay</p>
           </div>
-        </div>
-
-        <div className="footer-bottom">
-          <p>© 2025 FoodieExpress. All rights reserved. Created By Milan & Malay</p>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </Router>
   );
 }
