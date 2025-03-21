@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // For navigation
 import './css/Category.css'; // Import the CSS file
 
-const Category = () => {
+const Category = ({ theme }) => {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
+  const navigate = useNavigate(); // For navigation
 
   // Mock data for categories (replace with API fetch if needed)
   useEffect(() => {
@@ -16,19 +19,50 @@ const Category = () => {
       { id: 7, name: 'Mughlai', imageUrl: 'https://cdn.gintaa.com/food-listings/category/mughlai.png' },
       { id: 8, name: 'North Indian', imageUrl: 'https://cdn.gintaa.com/food-listings/category/northindian.png' },
     ];
-    setCategories(mockCategories);
+    setTimeout(() => {
+      setCategories(mockCategories);
+      setLoading(false); // Simulate loading delay
+    }, 1000); // Simulate API delay
   }, []);
 
+  // Handle category click
+  const handleCategoryClick = (categoryId) => {
+    navigate(`/category/${categoryId}`); // Navigate to category page
+  };
+
   return (
-    <div className="category-container">
-      <h2>What is on your mind?</h2>
-      <div className="category-list">
-        {categories.map((category) => (
-          <div key={category.id} className="category-item">
-            <img src={category.imageUrl} alt={category.name} className="category-image" />
-            <h3>{category.name}</h3>
+    <div className={`category-wrapper ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
+      <div className="category-container">
+        <h2>What is on your mind?</h2>
+        {loading ? (
+          <p>Loading categories...</p> // Loading state
+        ) : (
+          <div className="category-list">
+            <div className="category-scroll">
+              {categories.map((category) => (
+                <div
+                  key={category.id}
+                  className="category-item"
+                  onClick={() => handleCategoryClick(category.id)}
+                >
+                  <img src={category.imageUrl} alt={category.name} className="category-image" />
+                  <h3>{category.name}</h3>
+                </div>
+              ))}
+              {/* Duplicate categories for seamless scrolling */}
+              {categories.map((category) => (
+                <div
+                  key={`${category.id}-copy`}
+                  className="category-item"
+                  onClick={() => handleCategoryClick(category.id)}
+                >
+                  <img src={category.imageUrl} alt={category.name} className="category-image" />
+                  <h3>{category.name}</h3>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
