@@ -1,25 +1,54 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './css/UserLogin.css'; // Import custom CSS
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext"; // Import UserContext
+import "./css/UserLogin.css"; // Import custom CSS
 
 function UserLogin() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false); // State for success message
+  const { setUser } = useContext(UserContext); // Access setUser from UserContext
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     // Basic validation
     if (!email || !password) {
-      setError('Please fill in all fields.');
+      setError("Please fill in all fields.");
       return;
     }
-    // Simulate login logic (replace with actual API call)
-    if (email === 'user@example.com' && password === 'password') {
-      navigate('/'); // Redirect to home page after successful login
-    } else {
-      setError('Invalid email or password.');
+
+    try {
+      // Call the backend API for login
+      const response = await fetch("http://localhost:8080/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token); // Save token to localStorage
+        setUser({ userName: data.userName, email: data.email }); // Update user context
+        setSuccess(true); // Show success message
+        setError(""); // Clear any previous error
+
+        // Hide the success message after 3 seconds and redirect
+        setTimeout(() => {
+          setSuccess(false);
+          navigate("/"); // Redirect to home page
+        }, 3000);
+      } else {
+        setError(data.message || "Invalid email or password.");
+      }
+    } catch (err) {
+      console.error("Error during login:", err.message); // Log error message
+      setError("An error occurred. Please try again.");
     }
   };
 
@@ -28,6 +57,11 @@ function UserLogin() {
       <div className="user-login-card">
         <h2 className="user-login-title">User Login</h2>
         {error && <div className="user-login-error">{error}</div>}
+        {success && (
+          <div className="user-login-success">
+            Login successful! Redirecting...
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="user-login-form">
           <div className="form-group">
             <label htmlFor="email" className="form-label">
@@ -60,7 +94,10 @@ function UserLogin() {
           </button>
         </form>
         <p className="user-login-register-text">
-          Don't have an account? <a href="/user-register" className="register-link">Register here</a>.
+          Don't have an account?{" "}
+          <a href="/user-register" className="register-link">
+            Register here
+          </a>
         </p>
       </div>
     </div>

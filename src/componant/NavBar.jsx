@@ -1,37 +1,51 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import './css/NavBar.css'; // Import custom CSS
-import dishes from '../services/api.json'; // Import the JSON data
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/NavBar.css';
+import dishes from '../services/api.json';
+import { UserContext } from '../context/UserContext';
 
 function NavBar({ isDarkMode, toggleTheme, cart }) {
-  const navigate = useNavigate(); // Initialize useNavigate
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
-  const [searchResults, setSearchResults] = useState([]); // State for search results
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const { user, setUser } = useContext(UserContext);
 
   // Handle Admin Login click
   const handleAdminLoginClick = () => {
-    navigate('/admin-login'); // Navigate to the Admin Login page
+    navigate('/admin-login');
   };
 
   // Handle Cart Icon click
   const handleCartClick = () => {
-    navigate('/cart'); // Navigate to the Cart page
+    navigate('/cart');
   };
 
   // Handle User Login click
   const handleUserLoginClick = () => {
-    navigate('/user-login'); // Navigate to the User Login page
+    navigate('/user-login');
   };
 
   // Handle User Registration click
   const handleUserRegisterClick = () => {
-    navigate('/user-register'); // Navigate to the User Registration page
+    navigate('/user-register');
   };
 
   // Handle Restaurant Login click
   const handleRestaurantLoginClick = () => {
-    navigate('/restaurant-login'); // Navigate to the Restaurant Login page
+    navigate('/restaurant-login');
+  };
+
+  // Handle Profile Click
+  const handleProfileClick = () => {
+    navigate('/profile'); // Navigate to the profile dashboard
+  };
+
+  // Handle Logout
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUser(null); // Clear user context
+    navigate('/'); // Redirect to home page
   };
 
   // Handle Search Input Change
@@ -41,12 +55,12 @@ function NavBar({ isDarkMode, toggleTheme, cart }) {
 
     // Filter dishes based on the search query
     if (query.trim() === '') {
-      setSearchResults([]); // Clear results if the query is empty
+      setSearchResults([]);
     } else {
       const filteredDishes = dishes.filter((dish) =>
         dish.name.toLowerCase().includes(query.toLowerCase())
       );
-      setSearchResults(filteredDishes); // Update search results
+      setSearchResults(filteredDishes);
     }
   };
 
@@ -54,7 +68,6 @@ function NavBar({ isDarkMode, toggleTheme, cart }) {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchResults.length > 0) {
-      // Navigate to the first search result (or a search results page)
       navigate(`/dish/${searchResults[0].id}`);
     }
   };
@@ -65,7 +78,7 @@ function NavBar({ isDarkMode, toggleTheme, cart }) {
         {/* Brand Logo with Sample Image */}
         <a className="navbar-brand" href="#">
           <img
-            src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png" // Custom logo URL
+            src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png"
             alt="FoodieExpress Logo"
             className="d-inline-block align-text-top me-2"
           />
@@ -150,10 +163,10 @@ function NavBar({ isDarkMode, toggleTheme, cart }) {
             <a
               className="nav-link"
               href="#"
-              onClick={handleCartClick} // Navigate to the Cart page
+              onClick={handleCartClick}
             >
-              <i className="fas fa-shopping-cart"></i> {/* Font Awesome icon */}
-              <span className="badge bg-danger ms-1">{cart.length}</span> {/* Cart count */}
+              <i className="fas fa-shopping-cart"></i>
+              <span className="badge bg-danger ms-1">{cart.length}</span>
             </a>
           </div>
 
@@ -177,29 +190,49 @@ function NavBar({ isDarkMode, toggleTheme, cart }) {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <i className="fas fa-user"></i> {/* Font Awesome icon */}
+              <i className="fas fa-user"></i>
+              {user && <span className="ms-2">{user.userName}</span>}
             </a>
             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li>
-                <a className="dropdown-item" href="#" onClick={handleUserLoginClick}>
-                  User Login
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#" onClick={handleUserRegisterClick}>
-                  User Registration
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#" onClick={handleAdminLoginClick}>
-                  Admin Login
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#" onClick={handleRestaurantLoginClick}>
-                  Restaurant Login
-                </a>
-              </li>
+              {user ? (
+                // If user is logged in, show Profile and Logout
+                <>
+                  <li>
+                    <a className="dropdown-item" href="#" onClick={handleProfileClick}>
+                      Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#" onClick={handleLogout}>
+                      Logout
+                    </a>
+                  </li>
+                </>
+              ) : (
+                // If user is logged out, show Login and Registration options
+                <>
+                  <li>
+                    <a className="dropdown-item" href="#" onClick={handleUserLoginClick}>
+                      User Login
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#" onClick={handleUserRegisterClick}>
+                      User Registration
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#" onClick={handleAdminLoginClick}>
+                      Admin Login
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#" onClick={handleRestaurantLoginClick}>
+                      Restaurant Login
+                    </a>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

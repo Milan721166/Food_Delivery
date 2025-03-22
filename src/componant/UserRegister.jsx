@@ -30,16 +30,41 @@ function UserRegister() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Basic validation
     if (!name || !email || !password || !phone || !dob) {
       setError('Please fill in all required fields.');
       return;
     }
-    // Simulate registration logic (replace with actual API call)
-    console.log('User registered:', { name, email, password, phone, address, dob });
-    navigate('/user-login'); // Redirect to login page after registration
+
+    try {
+      const response = await fetch('http://localhost:8080/users/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName: name,
+          email,
+          mobNum: phone,
+          password,
+          address, // Include address
+          dob, // Include dob
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        navigate('/user-login'); // Redirect to login page after successful registration
+      } else {
+        setError(data.message || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Error during registration:', error); // Debug: Log error
+      setError('Server error. Please try again later.');
+    }
   };
 
   return (

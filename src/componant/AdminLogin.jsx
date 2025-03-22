@@ -1,11 +1,40 @@
-import React from 'react';
-import './css/AdminLogin.css'; 
+import React, { useState } from 'react';
+import './css/AdminLogin.css';
+
 function AdminLogin() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5000/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message); // Login successful
+      } else {
+        alert(data.message); // Invalid credentials
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Server error');
+    }
+  };
+
   return (
     <div className="admin-login-container">
       <div className="admin-login-box">
         <h1 className="admin-login-title">Admin Login</h1>
-        <form className="admin-login-form">
+        <form className="admin-login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input
@@ -13,6 +42,8 @@ function AdminLogin() {
               id="username"
               name="username"
               placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
@@ -23,6 +54,8 @@ function AdminLogin() {
               id="password"
               name="password"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>

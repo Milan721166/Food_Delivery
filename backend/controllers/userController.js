@@ -1,106 +1,139 @@
-const User = require("../models/User");
-const bcrypt = require("bcryptjs");
+const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
 dotenv.config();
 
-
 // Function to get all users
 const allUsers = async (req, res) => {
-    try {
-        const users = await User.find();
-        res.json(users);
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching users" });
-    }
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error.message);
+    res.status(500).json({ message: "Error fetching users" });
+  }
 };
 
-
-//function to register a user
+// Function to register a user
 const signupUser = async (req, res) => {
-    try {
-        const { userName, email, mobNum, password } = req.body;
-        //check if the user already exists
-        const userExists = await User.findOne({ email });
-        if (userExists) {
-            return res
-                .status(400)
-                .json({ message: "User already exists" });
-        }
+  try {
+    const { userName, email, mobNum, password, address, dob } = req.body;
 
-        //hash the password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        //create a new User
-        const newUser = new User({
-            userName,
-            email,
-            mobNum,
-            password: hashedPassword,
-        });
-
-        await newUser.save();
-        res
-            .status(201)
-            .json({ message: "User Registered Successfully" });
-    } catch (error) {
-        console.log("Error to create new user", error);
-        res.status(500).json({ message: "Server Error" });
+    // Validate required fields
+    if (!userName || !email || !mobNum || !password) {
+      return res.status(400).json({ message: "All required fields must be filled" });
     }
+
+    // Check if the user already exists
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    // Create a new user (without hashing the password)
+    const newUser = new User({
+      userName,
+      email,
+      mobNum,
+      password, // Store plain text password
+      address,
+      dob,
+    });
+
+    await newUser.save();
+    res.status(201).json({ message: "User Registered Successfully" });
+  } catch (error) {
+    console.error("Error during user registration:", error.message);
+    res.status(500).json({
+      message: "Server error. Please try again later.",
+      error: error.message,
+    });
+  }
 };
 
-
-//function to login a user
+// Function to login a user
 const loginUser = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        //check if the user exists
-        const user = await User
-            .findOne({ email });
+  const { email, password } = req.body;
 
-        if (!user) {
-            return res
-                .status(400)
-                .json({ message: "Invalid Credentials" });
-        }
-
-        //comapre password
-        const isMatch = await bcypt.compare(password, user.password);
-        if (!isMatch) {
-            return res
-                .status(400)
-                .json({ message: "Invalid Credentials" });
-        }
-        //generate jwt token
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: "1d",
-        });
-        res.json({ message: "Login successfully", token });
-    } catch (error) {
-        console.log("Error to login user", error);
-        res.status(500).json({ message: "Server Error" });
+  try {
+    // Validate required fields
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
     }
 
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Validate password (compare plain text passwords)
+    if (password !== user.password) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    // Generate token
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.status(200).json({ token, message: "Login successful" });
+  } catch (error) {
+    console.error("Error during login:", error.message);
+    res.status(500).json({ message: "Server error. Please try again later.", error: error.message });
+  }
 };
-
-
 
 // Function to get a single user by ID
 const singleUserById = async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id);
-
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        res.json(user);
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching user" });
+  try {
+    const user = await User.findById(req.user.id); // Fetch user by ID from token
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
+    res.json({
+      userName: user.userName,
+      email: user.email,
+      mobNum: user.mobNum,
+      address: user.address,
+      dob: user.dob,
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error.message);
+    res.status(500).json({ message: "Error fetching user" });
+  }
 };
 
-// Exporting the functions
-module.exports = { signupUser, loginUser, allUsers, singleUserById };
+// Function to update a user's profile
+const updateUserProfile = async (req, res) => {
+  try {
+    const { userName, email, mobNum, password, address, dob } = req.body;
+
+    // Find the user by ID
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user fields
+    user.userName = userName || user.userName;
+    user.email = email || user.email;
+    user.mobNum = mobNum || user.mobNum;
+    user.address = address || user.address;
+    user.dob = dob || user.dob;
+
+    // Update password if provided
+    if (password) {
+      user.password = password;
+    }
+
+    await user.save();
+    res.status(200).json({ message: "Profile updated successfully" });
+  } catch (error) {
+    console.error("Error updating profile:", error.message);
+    res.status(500).json({ message: "Error updating profile" });
+  }
+};
+
+module.exports = { signupUser, loginUser, allUsers, singleUserById, updateUserProfile };
