@@ -76,7 +76,7 @@ function NavBar({ isDarkMode, toggleTheme, cart }) {
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container-fluid">
         {/* Brand Logo with Sample Image */}
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           <img
             src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png"
             alt="FoodieExpress Logo"
@@ -103,7 +103,7 @@ function NavBar({ isDarkMode, toggleTheme, cart }) {
           {/* Main Navigation Links */}
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
+              <a className="nav-link active" aria-current="page" href="/">
                 Home
               </a>
             </li>
@@ -179,6 +179,7 @@ function NavBar({ isDarkMode, toggleTheme, cart }) {
               {isDarkMode ? '🌞 Light' : '🌙 Dark'}
             </button>
           </div>
+          
 
           {/* User Dropdown */}
           <div className="nav-item dropdown">

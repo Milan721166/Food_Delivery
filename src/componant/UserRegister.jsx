@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/UserRegister.css'; // Import custom CSS
 
-function UserRegister() {
+function UserRegister({ theme }) {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -68,12 +68,12 @@ function UserRegister() {
   };
 
   return (
-    <div className="user-register-container">
+    <div className={`user-register-container ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
       <div className="user-register-card">
         <h2 className="user-register-title">User Registration</h2>
-        {error && <div className="user-register-error">{error}</div>}
+        {error && <div className="user-register-error animate-fade-in">{error}</div>}
         <form onSubmit={handleSubmit} className="user-register-form">
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="name" className="form-label">
               Full Name
             </label>
@@ -86,7 +86,7 @@ function UserRegister() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="email" className="form-label">
               Email
             </label>
@@ -99,7 +99,7 @@ function UserRegister() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="password" className="form-label">
               Password
             </label>
@@ -112,7 +112,7 @@ function UserRegister() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="phone" className="form-label">
               Phone Number
             </label>
@@ -125,7 +125,7 @@ function UserRegister() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="address" className="form-label">
               Address 
             </label>
@@ -144,7 +144,7 @@ function UserRegister() {
               Use My Current Location
             </button>
           </div>
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="dob" className="form-label">
               Date of Birth (Extra : Discount On Your Birth Day)
             </label>
@@ -157,11 +157,11 @@ function UserRegister() {
               required
             />
           </div>
-          <button type="submit" className="user-register-button">
+          <button type="submit" className="user-register-button animate-fade-in">
             Register
           </button>
         </form>
-        <p className="user-register-login-text">
+        <p className="user-register-login-text animate-fade-in">
           Already have an account? <a href="/user-login" className="login-link">Login here</a>.
         </p>
       </div>

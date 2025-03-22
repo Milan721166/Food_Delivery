@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/RestaurantLogin.css'; // Import custom CSS
 
-function RestaurantLogin() {
+function RestaurantLogin({ theme }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,12 +33,12 @@ function RestaurantLogin() {
   };
 
   return (
-    <div className="restaurant-login-container">
+    <div className={`restaurant-login-container ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
       <div className="restaurant-login-card">
         <h2 className="restaurant-login-title">Restaurant Login</h2>
-        {error && <div className="restaurant-login-error">{error}</div>}
+        {error && <div className="restaurant-login-error animate-fade-in">{error}</div>}
         <form onSubmit={handleSubmit} className="restaurant-login-form">
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="restaurantName" className="form-label">
               Restaurant Name
             </label>
@@ -51,7 +51,7 @@ function RestaurantLogin() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="email" className="form-label">
               Email
             </label>
@@ -64,7 +64,7 @@ function RestaurantLogin() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="password" className="form-label">
               Password
             </label>
@@ -77,15 +77,15 @@ function RestaurantLogin() {
               required
             />
           </div>
-          <button type="submit" className="restaurant-login-button" disabled={isLoading}>
+          <button type="submit" className="restaurant-login-button animate-fade-in" disabled={isLoading}>
             {isLoading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <p className="restaurant-login-register-text">
+        <p className="restaurant-login-register-text animate-fade-in">
           Don't have an account?{' '}
           <a href="tel:+91 6296740204" className="call-us-link">Call Us</a>
         </p>
-        <p className="forgot-password-text">
+        <p className="forgot-password-text animate-fade-in">
           <a href="/forgot-password" className="forgot-password-link">Forgot Password?</a>
         </p>
       </div>

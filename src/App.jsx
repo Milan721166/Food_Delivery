@@ -13,8 +13,8 @@ import RestaurantLogin from './componant/RestaurantLogin';
 import RestaurantPage from './componant/RestaurantPage';
 import ProductDetails from './componant/ProductDetails';
 import RestaurantList from './componant/RestaurantList';
-import ProfileDashboard from './componant/ProfileDashboard'; // Import ProfileDashboard
-import { UserProvider } from './context/UserContext.jsx'; // Correct import path
+import ProfileDashboard from './componant/ProfileDashboard';
+import { UserProvider } from './context/UserContext.jsx';
 
 function App() {
   const [theme, setTheme] = useState('light'); // State for theme
@@ -27,7 +27,11 @@ function App() {
 
   // Apply theme to the entire app
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    if (theme === 'dark') {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
   }, [theme]);
 
   // Add item to cart
@@ -44,11 +48,11 @@ function App() {
   };
 
   return (
-    <UserProvider> {/* Wrap the app with UserProvider */}
+    <UserProvider>
       <Router>
         <div className={`app ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
           <header>
-            <NavBar theme={theme} toggleTheme={toggleTheme} cart={cart} />
+            <NavBar isDarkMode={theme === 'dark'} toggleTheme={toggleTheme} cart={cart} />
           </header>
 
           <Routes>
@@ -65,7 +69,7 @@ function App() {
                   </section>
 
                   <main>
-                    <RestaurantList theme={theme} /> {/* Pass theme prop */}
+                    <RestaurantList theme={theme} />
                     <Home handleAddToCart={handleAddToCart} theme={theme} />
                   </main>
                 </>
@@ -78,7 +82,7 @@ function App() {
             <Route path="/restaurant-login" element={<RestaurantLogin theme={theme} />} />
             <Route path="/restaurant_page" element={<RestaurantPage theme={theme} />} />
             <Route path="/productDetails/:id" element={<ProductDetails theme={theme} />} />
-            <Route path="/profile" element={<ProfileDashboard theme={theme} />} /> {/* Add ProfileDashboard route */}
+            <Route path="/profile" element={<ProfileDashboard theme={theme} />} />
           </Routes>
 
           <footer className={`footer ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>

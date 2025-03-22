@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './css/AdminLogin.css';
 
-function AdminLogin() {
+function AdminLogin({ theme }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -31,11 +31,11 @@ function AdminLogin() {
   };
 
   return (
-    <div className="admin-login-container">
+    <div className={`admin-login-container ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
       <div className="admin-login-box">
         <h1 className="admin-login-title">Admin Login</h1>
         <form className="admin-login-form" onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -47,7 +47,7 @@ function AdminLogin() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -59,11 +59,11 @@ function AdminLogin() {
               required
             />
           </div>
-          <button type="submit" className="admin-login-button">
+          <button type="submit" className="admin-login-button animate-fade-in">
             Login
           </button>
         </form>
-        <p className="admin-login-footer">
+        <p className="admin-login-footer animate-fade-in">
           Forgot your password? <a href="/reset-password">Reset here</a>
         </p>
       </div>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext"; // Import UserContext
 import "./css/UserLogin.css"; // Import custom CSS
 
-function UserLogin() {
+function UserLogin({ theme, toggleTheme }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,17 +53,17 @@ function UserLogin() {
   };
 
   return (
-    <div className="user-login-container">
+    <div className={`user-login-container ${theme === 'dark' ? 'dark-theme' : 'light-theme'}`}>
       <div className="user-login-card">
         <h2 className="user-login-title">User Login</h2>
-        {error && <div className="user-login-error">{error}</div>}
+        {error && <div className="user-login-error animate-fade-in">{error}</div>}
         {success && (
-          <div className="user-login-success">
+          <div className="user-login-success animate-fade-in">
             Login successful! Redirecting...
           </div>
         )}
         <form onSubmit={handleSubmit} className="user-login-form">
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="email" className="form-label">
               Email
             </label>
@@ -76,7 +76,7 @@ function UserLogin() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group animate-slide-in">
             <label htmlFor="password" className="form-label">
               Password
             </label>
@@ -89,11 +89,11 @@ function UserLogin() {
               required
             />
           </div>
-          <button type="submit" className="user-login-button">
+          <button type="submit" className="user-login-button animate-fade-in">
             Login
           </button>
         </form>
-        <p className="user-login-register-text">
+        <p className="user-login-register-text animate-fade-in">
           Don't have an account?{" "}
           <a href="/user-register" className="register-link">
             Register here

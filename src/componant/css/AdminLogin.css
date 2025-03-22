@@ -1,143 +1,170 @@
 /* AdminLogin.css */
 
-/* ===== Global Styles ===== */
-:root {
-    --primary: #6c5ce7; /* Purple */
-    --secondary: #a29bfe; /* Light purple */
-    --background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-    --text: #2d3436;
-    --white: #ffffff;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Light Theme */
+.admin-login-container.light-theme {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+}
+
+.admin-login-box.light-theme {
+  background: white;
+  color: #333;
+}
+
+.form-control.light-theme {
+  background-color: white;
+  color: #333;
+  border-color: #ddd;
+}
+
+/* Dark Theme */
+.admin-login-container.dark-theme {
+  background: linear-gradient(135deg, #1a202c, #2d3748);
+}
+
+.admin-login-box.dark-theme {
+  background: #2d3748;
+  color: #e2e8f0;
+}
+
+.form-control.dark-theme {
+  background-color: #4a5568;
+  color: #e2e8f0;
+  border-color: #4a5568;
+}
+
+/* Container for the login page */
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+/* Login box styling */
+.admin-login-box {
+  background: var(--navbar-bg); /* Use CSS variable for card background */
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow for depth */
+  max-width: 400px;
+  width: 100%;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Title styling */
+.admin-login-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--text); /* Use CSS variable for text color */
+  animation: slideInDown 0.5s ease-in-out; /* Slide-in animation */
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 1.5rem;
+  animation: slideInUp 0.5s ease-in-out; /* Slide-in animation */
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text); /* Use CSS variable for text color */
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--search-border); /* Use CSS variable for border color */
+  border-radius: 5px;
+  font-size: 1rem;
+  color: var(--text); /* Use CSS variable for text color */
+  background-color: var(--search-bg); /* Use CSS variable for background */
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+}
+
+.form-group input:focus {
+  border-color: var(--button-bg); /* Use CSS variable for focus border color */
+  outline: none;
+}
+
+/* Login button styling */
+.admin-login-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--button-bg); /* Use CSS variable for button background */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+  animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+}
+
+.admin-login-button:hover {
+  background-color: var(--button-hover); /* Use CSS variable for hover background */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.admin-login-button:active {
+  transform: translateY(0); /* Reset lift on click */
+}
+
+/* Footer text styling */
+.admin-login-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--text); /* Use CSS variable for text color */
+  animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+}
+
+.admin-login-footer a {
+  color: var(--button-bg); /* Use CSS variable for link color */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.admin-login-footer a:hover {
+  color: var(--button-hover); /* Use CSS variable for hover color */
+  text-decoration: underline; /* Underline on hover */
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  /* ===== Admin Login Container ===== */
-  .admin-login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: var(--background);
-    padding: 1rem;
+  to {
+    opacity: 1;
   }
-  
-  /* ===== Admin Login Box ===== */
-  .admin-login-box {
-    background: var(--white);
-    padding: 2.5rem;
-    border-radius: 1rem;
-    box-shadow: var(--shadow);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
   }
-  
-  .admin-login-title {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: var(--text);
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  /* ===== Form Styles ===== */
-  .admin-login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  .form-group {
-    text-align: left;
-  }
-  
-  .form-group label {
-    font-size: 1rem;
-    color: var(--text);
-    margin-bottom: 0.5rem;
-    display: block;
-    font-weight: 500;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-  }
-  
-  .form-group input:focus {
-    border-color: var(--primary);
-    outline: none;
-  }
-  
-  /* ===== Login Button ===== */
-  .admin-login-button {
-    background-color: var(--primary);
-    color: var(--white);
-    border: none;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .admin-login-button:hover {
-    background-color: #5a4fcf;
-    transform: translateY(-2px);
-  }
-  
-  .admin-login-button:active {
+  to {
     transform: translateY(0);
+    opacity: 1;
   }
-  
-  /* ===== Footer Link ===== */
-  .admin-login-footer {
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    color: var(--text);
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
   }
-  
-  .admin-login-footer a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 500;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  .admin-login-footer a:hover {
-    text-decoration: underline;
-  }
-  
-  /* ===== Animations ===== */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* ===== Responsive Design ===== */
-  @media (max-width: 480px) {
-    .admin-login-box {
-      padding: 1.5rem;
-    }
-  
-    .admin-login-title {
-      font-size: 1.75rem;
-    }
-  
-    .form-group input {
-      padding: 0.5rem;
-    }
-  
-    .admin-login-button {
-      padding: 0.5rem;
-    }
-  }
+}
